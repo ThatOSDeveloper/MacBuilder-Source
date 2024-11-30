@@ -118,6 +118,11 @@ MacBuilder currently operates as follows:
 
 ---
 
+# Discord Server
+Join the official [Discord Server](https://discord.gg/7FhHhjm9uu)
+
+---
+
 # Support The Creator
 If you'd like to support me, consider donating here: [Buy me a coffee.](https://buymeacoffee.com/kiviedev)
 
