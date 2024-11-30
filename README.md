@@ -51,3 +51,71 @@ Thank you for respecting these guidelines. Let's collaborate to make something a
 
 ### Troubleshooting
 For any issues, refer to the **[Issues](../../issues)** tab in this repository or feel free to open a new issue.  
+
+## Workflow
+
+MacBuilder currently operates as follows:
+
+1. **Hardware Analysis:**  
+   The **MHC** tool dumps a JSON file containing details about your hardware.  
+
+2. **USB Selection:**  
+   Once the hardware analysis is complete, you select a USB drive from the available options.  
+
+3. **USB Formatting:**  
+   The selected USB is formatted to prepare it for use.  
+
+4. **macOS Compatibility Check:**  
+   Based on the hardware analysis, MacBuilder provides a list of compatible macOS versions for your specific hardware.  
+
+5. **OpenCore Installation:**  
+   - The selected macOS version is used to extract the base OS and OpenCore files onto the USB.  
+   - The program automatically organizes and cleans up the extracted files to ensure a streamlined setup.  
+
+## Roadmap
+
+### Planned Features
+- **Easy-to-use and Modify UI**  
+  A user-friendly interface that allows easy customization and changes of kexts, ACPI, Drivers, etc.
+
+- **Automatic Kexts, ACPI, Drivers Download**  
+  Automatically download Kexts, ACPI, Drivers, etc based on the hardware.
+
+- **Built-in Installer**  
+  Download Kexts, ACPI, Drivers, etc directly from MacBuilder.
+
+- **OCValidator Integration**  
+  Integrate OpenCore Validator tool to validate EFI.
+
+- **Boot-Picker Customization**  
+  Allow customization of the boot-picker screen, including themes, options, and additional features.
+
+- **Backup and Restore**  
+  Enable the ability to back up and restore EFI.
+
+- **Multilingual Support**  
+  Add support for multiple languages.
+
+- **Virtual USB Drive**  
+  Implement a feature to use a portion of the system's storage as a virtual USB drive, simulating a physical USB stick.
+
+---
+
+## TODO
+
+### Features to be Developed or Improved
+- **Improve UI**  
+  Improve the user interface to make it more responsive, and visually appealing.
+
+- **Improve Code**  
+  Improve and optimize the codebase for better readability.
+
+- **Code Cleanups**  
+  Address code quality issues, remove unnecessary code.
+
+- **Better Hardware Checks**  
+  Improve the hardware compatibility checks.
+
+---
+
+The project is actively being developed, and community contributions are welcome to help improve its features and functionality.
