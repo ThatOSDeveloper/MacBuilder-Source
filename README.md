@@ -118,4 +118,9 @@ MacBuilder currently operates as follows:
 
 ---
 
+# Support The Creator
+If you'd like to support me, consider donating here: [Buy me a coffee.](https://buymeacoffee.com/kiviedev)
+
+---
 The project is actively being developed, and community contributions are welcome to help improve its features and functionality.
+
