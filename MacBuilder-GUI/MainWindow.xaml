@@ -1,0 +1,46 @@
+<windowex:WindowEx
+    x:Class="MacBuilder_GUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MacBuilder_GUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:AnimatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:windowex="using:WinUIEx"
+    mc:Ignorable="d">
+
+
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Bar -->
+        <Grid x:Name="AppTitleBar" Background="Transparent" Visibility="Visible" Margin="0,0,0,0" IsHitTestVisible="True" Canvas.ZIndex="3" Grid.Column="0" Grid.Row="0">
+            <Grid.OpacityTransition>
+                <ScalarTransition Duration="0:0:0.083" />
+            </Grid.OpacityTransition>
+            <Image x:Name="TitlebarIcon"
+               Source="Assets/macbuilder.png"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Visibility="Collapsed"
+               Width="16"
+               Height="16"/>
+            <TextBlock x:Name="WindowTitle"
+                   Margin="16,0,0,0"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource CaptionTextBlockStyle}"
+                   Text="MacBuilder" />
+        </Grid>
+
+        <!-- Background Grid -->
+        <Grid x:Name="BackgroundGrid"  Grid.Row="1" Grid.Column="0" Background="Transparent">
+        </Grid>
+
+        <!-- Content Frame on Top of Background -->
+        <Frame x:Name="MainWindowFrame" Grid.Row="1" Grid.Column="0" Background="Transparent"/>
+    </Grid>
+
+</windowex:WindowEx>

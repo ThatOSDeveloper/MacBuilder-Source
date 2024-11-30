@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MacBuilder-GUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MacBuilder-GUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

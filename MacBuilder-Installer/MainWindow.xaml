@@ -1,0 +1,33 @@
+<windowex:WindowEx
+    x:Class="MacBuilder_Installer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MacBuilder_Installer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:AnimatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:windowex="using:WinUIEx"
+    mc:Ignorable="d"
+    Width="550"
+    Height="500"
+    >
+
+    <Grid x:Name="RootGrid" Background="#1E1E2D">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Custom Title Bar -->
+        <Grid x:Name="CustomTitleBar" Grid.Row="0" Background="#1E1E2D" Height="120">
+        </Grid>
+
+        <!-- Background Grid -->
+        <Grid x:Name="BackgroundGrid"  Grid.Row="1" Background="#1E1E2D">
+        </Grid>
+
+        <!-- Content Frame on Top of Background -->
+        <Frame x:Name="MainWindowFrame" Grid.Row="1" Background="#1E1E2D"/>
+    </Grid>
+
+</windowex:WindowEx>

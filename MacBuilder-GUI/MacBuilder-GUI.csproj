@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>MacBuilder_GUI</RootNamespace>
+    <AssemblyVersion>1.0.0.14</AssemblyVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x86;x64;ARM64</Platforms>
+    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &gt;= 8">win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <StartupObject>MacBuilder_GUI.Program</StartupObject>
+    <ApplicationIcon>macbuilder.ico</ApplicationIcon>
+    <SignAssembly>False</SignAssembly>
+    <Authors>Kivie</Authors>
+    <Company>MeteorFN @ 2024</Company>
+    <Copyright>MeteorFN @ 2024</Copyright>
+    <PackageProjectUrl>https://github.com/KivieDev/MacBuilder</PackageProjectUrl>
+    <PackageIcon>macbuilder.png</PackageIcon>
+    <RepositoryUrl>https://github.com/KivieDev/MacBuilder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageCertificateThumbprint>FC7A1647E0F4DABA6C234C281EF6BCFB1BFA3ECE</PackageCertificateThumbprint>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\Lion.png" />
+    <None Remove="Assets\macbuilder.ico" />
+    <None Remove="Assets\macbuilder.png" />
+    <None Remove="Assets\MacOS\BigSur.png" />
+    <None Remove="Assets\MacOS\Catalina.png" />
+    <None Remove="Assets\MacOS\ElCapitan.png" />
+    <None Remove="Assets\MacOS\HighSierra.png" />
+    <None Remove="Assets\MacOS\Mavericks.png" />
+    <None Remove="Assets\MacOS\Mojave.png" />
+    <None Remove="Assets\MacOS\Monterey.png" />
+    <None Remove="Assets\MacOS\MountainLion.png" />
+    <None Remove="Assets\MacOS\Sierra.png" />
+    <None Remove="Assets\MacOS\Sonoma.png" />
+    <None Remove="Assets\MacOS\Ventura.png" />
+    <None Remove="Assets\MacOS\Yosemite.png" />
+    <None Remove="BaseSelector.xaml" />
+    <None Remove="EFISetup.xaml" />
+    <None Remove="Initialize.xaml" />
+    <None Remove="MainMenu.xaml" />
+    <None Remove="OSDownloading.xaml" />
+    <None Remove="SettingsPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="macbuilder.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PListSharp" Version="1.8.0" />
+    <PackageReference Include="WinUIEx" Version="2.5.0" />
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+  <!--
+    Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
+    Tools extension to be activated for this project even if the Windows App SDK Nuget
+    package has not yet been restored.
+  -->
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\Downloads\macbuilder.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="OSDownloading.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="BaseSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Initialize.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Components\Core\Apple\Types\Drivers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="UI\SelectLanguage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="EFISetup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <!--
+    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
+    Explorer "Package and Publish" context menu entry to be enabled for this project even if
+    the Windows App SDK Nuget package has not yet been restored.
+  -->
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Reactor_Commands="-quiet -dead_code_removal 1 -antitamp 1 -anti_debug 1 -hide_calls 1 -control_flow 1 -flow_level 9 -resourceencryption 1 -virtualization 1 -necrobit 1 -all_params 1 -obfuscate_public_types 1 -number_of_instances_enable 1 -number_of_instances 1" Reactor_Configuration="Release" Reactor_Deploy="0" Reactor_Enabled="1" Reactor_Output="&lt;AssemblyLocation&gt;\&lt;AssemblyFileName&gt;" Reactor_Project="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

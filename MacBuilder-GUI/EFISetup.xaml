@@ -1,0 +1,47 @@
+<Page
+    x:Class="MacBuilder_GUI.EFISetup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MacBuilder_GUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <!-- Background Gradient -->
+        <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1A1A1A" Offset="0.0" />
+            <GradientStop Color="#2E2E2E" Offset="0.5" />
+            <GradientStop Color="#4D4D4D" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <!-- Style for Progress Bar -->
+        <Style TargetType="ProgressBar">
+            <Setter Property="Foreground" Value="LightBlue"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{StaticResource BackgroundGradient}">
+        <!-- Centered layout for setting up EFI progress -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="500" Spacing="20">
+
+            <!-- Setting up EFI status heading -->
+            <TextBlock Text="Setting Up EFI" FontSize="32" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,15" Foreground="White"/>
+
+            <!-- Animated Circular Progress (Spinner) -->
+            <ProgressRing IsActive="True" Width="100" Height="100" Foreground="LightBlue" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <!-- Progress Bar -->
+            <ProgressBar x:Name="EfiSetupProgressBar" Width="470" Value="1" Maximum="100" Margin="0,10"/>
+
+            <!-- Status message showing setup percentage or info -->
+            <TextBlock x:Name="StatusMessage" Text="Preparing EFI Setup..." FontSize="20" Foreground="White" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Page>
