@@ -52,6 +52,9 @@ Thank you for respecting these guidelines. Let's collaborate to make something a
 ### Troubleshooting
 For any issues, refer to the **[Issues](../../issues)** tab in this repository or feel free to open a new issue.  
 
+## MHC
+MHC is now open-source and is available here [MHC](https://github.com/KivieDev/MacBuilder-Compatibility-Checker), the same usage guidelines apply.
+
 ## Workflow
 
 MacBuilder currently operates as follows:
