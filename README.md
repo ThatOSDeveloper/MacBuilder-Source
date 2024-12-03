@@ -1,6 +1,7 @@
 # MacBuilder
 
 This project is open for contributions from the community to help improve its features. Please read the following guidelines carefully before using or contributing to this repository.
+NOTE: The current state of MacBuilder is not functional! The EFI it creates is cleaned OC files. It wont run!!
 
 ## Usage Guidelines
 
