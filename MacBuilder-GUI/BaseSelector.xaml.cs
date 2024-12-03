@@ -22,13 +22,12 @@ using static MacBuilder_GUI.Core.Components.Core.Classes.MacClasses;
 
 namespace MacBuilder_GUI
 {
-    public sealed partial class Selection : Page
+    public sealed partial class BaseSelector : Page
     {
-        public Selection()
+        public BaseSelector()
         {
             this.InitializeComponent();
         }
-
         private async void Selection_Loaded(object sender, RoutedEventArgs e)
         {
             var usbDevices = await GetConnectedUsbDevicesAsync();
@@ -168,11 +167,19 @@ namespace MacBuilder_GUI
                 Logger.Log("No valid OS selected or selection is null.");
             }
         }
-
         private async void RefreshDevices_Click(object sender, RoutedEventArgs e)
         {
             var usbDevices = await GetConnectedUsbDevicesAsync();
             USBList.ItemsSource = usbDevices;
+        }
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Navigate(typeof(USBPartitionPage));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Navigate(typeof(MainMenu));
         }
     }
 }

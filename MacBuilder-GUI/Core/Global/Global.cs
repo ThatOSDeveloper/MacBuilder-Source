@@ -16,6 +16,7 @@ namespace MacBuilder.Core.Global
         // Entry
         public static string Version = "mb-1.0.0"; // macbuilder-1.0.0
         public static bool EnableLogging = true;
+        public static string MHCDownloadURL = "https://api.github.com/repos/KivieDev/MacBuilder-Hardware-Checker";
 
         // UI
         public static bool Animations = false;

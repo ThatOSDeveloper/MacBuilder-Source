@@ -32,7 +32,6 @@ namespace MacBuilder_GUI
     public sealed partial class MainWindow : WinUIEx.WindowEx
     {
         public static Frame ShellFrame { get; private set; }
-        public static Button TitleBarPaneToggleButton { get; private set; }
 
         private static Mutex mutex;
         public static bool CreatedNew { get; private set; }
@@ -82,7 +81,7 @@ namespace MacBuilder_GUI
 
                 // We need to set the shellframe to use across the app to navigate.
                 ShellFrame = MainWindowFrame;
-                MainWindowFrame.Navigate(typeof(StartUp));
+                MainWindowFrame.Navigate(typeof(Initialize));
             }
             catch { }
         }
@@ -91,7 +90,6 @@ namespace MacBuilder_GUI
         {
             try
             {
-                // Allocate console
                 if (AllocConsole())
                 {
                     Console.Title = "MacBuilder - Console";

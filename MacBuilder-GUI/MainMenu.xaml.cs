@@ -98,7 +98,7 @@ namespace MacBuilder_GUI
         }
         private void newproj_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate(typeof(Selection));
+            MainWindow.Navigate(typeof(BaseSelector));
         }
 
         private void loadproj_Click(object sender, RoutedEventArgs e)

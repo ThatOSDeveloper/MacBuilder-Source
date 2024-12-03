@@ -2,6 +2,7 @@ using MacBuilder.Core.Global;
 using MacBuilder.Core.Logger;
 using MacBuilder_GUI.Core.Components.Assets.Computer;
 using MacBuilder_GUI.Core.Components.Assets.Dialogs;
+using MacBuilder_GUI.Core.Components.Extras.Github;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
@@ -20,9 +21,9 @@ namespace MacBuilder_GUI
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class StartUp : Page
+    public sealed partial class Initialize : Page
     {
-        public StartUp()
+        public Initialize()
         {
             this.InitializeComponent();
         }
@@ -32,113 +33,99 @@ namespace MacBuilder_GUI
             {
                 Logger.Log($"Initialized MacBuilder Created/Developed by Kivie. v{Global.Version}");
                 Logger.Log("Kivie @ 2024 all rights reserved.");
-                if (MainGrid == null)
-                {
-                    // init failed.
-                    return;
-                }
                 Logger.Log("Pre-Loading UI...");
-                Log("Loading UI...");
-                // we should calculate the load times to know how long to delay
-                // internal exceptions will cause instant crashes
                 await Task.Delay(2000); // wait for window to load to avoid exceptions
-                Logger.Log("Checking hardware...");
 
-                string mhc = AppContext.BaseDirectory + "\\MHC.exe";
-                string mhcdump = Global.GetDownloadPath() + "\\hardware_dump.json";
-
+                string mhc = Path.Combine(AppContext.BaseDirectory, "MHC.exe");
+                string mhcdump = Path.Combine(Global.GetDownloadPath(), "hardware_dump.json");
                 if (!File.Exists(mhc))
                 {
-                    Logger.Log("File not found: " + mhc, Logger.LogLevel.Error);
-                    Log("File not found: " + mhc);
-                    //DialogClass.MessageBox("Missing Executable", "MacBuilder cannot run without MHC (MacBuilder Hardware Checker). Verify the directory of " + mhc);
-                    //return;
+                    Logger.Log("MHC does not exist downloading latest github release...");
+                    await DownloadLatestGithub.DownloadAsync(Global.MHCDownloadURL, AppContext.BaseDirectory);
                 }
 
-                // Start the process to run MHC
-                Process proc = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = mhc,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = false,
-                        RedirectStandardError = false,
-                        Arguments = "--silent --dump"
-                    }
-                };
-                //proc.Start(); // Uncomment if you want to start the process
-
-                // Check if the hardware dump file exists
                 if (!File.Exists(mhcdump))
                 {
-                    Logger.Log("Could not find MHC dump file. Contact support.", Logger.LogLevel.Error);
-                    Log("Could not find MHC dump file. Contact support.");
-                    return;
-                }
+                    try
+                    {
+                        ProcessStartInfo startInfo = new ProcessStartInfo
+                        {
+                            FileName = mhc,
+                            Arguments = "--silent --dump",
+                            UseShellExecute = false,
+                            RedirectStandardOutput = true,
+                            RedirectStandardError = true,
+                            CreateNoWindow = false
+                        };
 
-                // Read the JSON dump file
+                        Process process = Process.Start(startInfo);
+
+                        if (process != null)
+                        {
+                            string output = process.StandardOutput.ReadToEnd();
+                            string errorOutput = process.StandardError.ReadToEnd();
+
+                            Logger.Log("Process output: " + output);
+                            Logger.Log("Process error output: " + errorOutput);
+
+                            process.WaitForExit();
+                        }
+                        else
+                        {
+                            Logger.Log("Failed to start the process.", Logger.LogLevel.Error);
+                            DisplayError();
+                            return;
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log("An error occurred: " + ex.Message, Logger.LogLevel.Error);
+                        DisplayError();
+                        return;
+                    }
+                }
                 string json = File.ReadAllText(mhcdump);
 
-                // Deserialize the JSON into the HardwareInfo object using Json.NET
                 HardwareInfo hardwareInfo = JsonConvert.DeserializeObject<HardwareInfo>(json);
 
                 if (hardwareInfo == null)
                 {
                     Logger.Log("Failed to deserialize hardware information.", Logger.LogLevel.Error);
+                    DisplayError();
                     return;
                 }
                 Global.hardwareInfo = hardwareInfo;
 
-                // temp
-                //bool isDriveSupported = GetComputerSpecs.CheckStorageSupport();
-                //bool isNetworkSupported = GetComputerSpecs.CheckNetworkAdapterSupport();
-                //bool isWifiSupported = GetComputerSpecs.CheckWifiSupport();
+                Logger.Log($"Detected CPU: {hardwareInfo.CPU.Name} supported: {hardwareInfo.CPU.IsCPUSupported}");
+                Logger.Log($"Detected CPU: {hardwareInfo.GPU.Model} supported: {hardwareInfo.GPU.IsGPUSupported}");
 
-
-
-                Logger.Log("Detected CPU: " + hardwareInfo.CPU.Name + " Supported: " + hardwareInfo.CPU.IsCPUSupported);
-                Logger.Log("Detected GPU: " + hardwareInfo.GPU.Model + " Supported: " + hardwareInfo.GPU.IsGPUSupported);
-
-                if (/* isDriveSupported && isNetworkSupported && isWifiSupported && */ hardwareInfo.GPU.IsGPUSupported && hardwareInfo.CPU.IsCPUSupported && hardwareInfo.Supported.SupportedMacVersions != null && hardwareInfo.Supported.isUEFISupported)
+                if (hardwareInfo.GPU.IsGPUSupported && hardwareInfo.CPU.IsCPUSupported && hardwareInfo.Supported.SupportedMacVersions != null && hardwareInfo.Supported.isUEFISupported)
                 {
-                    Log("Your PC seems supported. Loading content...");
-                    Logger.Log("All checks passed, navigating...");
+                    Logger.Log("Your PC is supported. Loading content...");
                     MainWindow.Navigate(typeof(MainMenu));
                 }
                 else
                 {
                     if (!hardwareInfo.Supported.isUEFISupported)
-                        Log("UEFI is not supported on this hardware.");
+                        Logger.Log("UEFI is not supported on this hardware.");
                     if (!hardwareInfo.CPU.IsCPUSupported)
-                        Log("Your CPU is not supported.");
+                        Logger.Log("Your CPU is not supported.");
                     if (!hardwareInfo.GPU.IsGPUSupported)
-                        Log("Your GPU is not supported.");
-                    /*
-                    if (!isDriveSupported)
-                        Log("Your drive is not supported.", Logger.LogLevel.Error);
-                    if (!isNetworkSupported)
-                        Log("Your network adapter is not supported.", Logger.LogLevel.Warning);
-                    if (!isWifiSupported)
-                        Log("Your WiFi card is not supported.", Logger.LogLevel.Warning);
-                    */
+                        Logger.Log("Your GPU is not supported.");
+                    DisplayError();
                 }
             } catch (Exception ex)
             {
                 // will never log unless in log.txt
                 Logger.Log("STARTUP EXCEPTION! " + ex, Logger.LogLevel.Error);
+                DisplayError();
             }
         }
-        public void Log(string message, Logger.LogLevel level = Logger.LogLevel.Info)
+        public void DisplayError()
         {
-            // Format the message
-            string formattedMessage = $"{DateTime.Now}: [{level}] {message}";
-
-            // Append the message to the TextBlock
-            Output.Text += formattedMessage + Environment.NewLine;
-
-            // Scroll to the bottom of the ScrollViewer
-            LogScrollViewer.ChangeView(null, LogScrollViewer.ExtentHeight, null);
+            progbar.IsIndeterminate = false;
+            ConsoleMessage.Visibility = Visibility.Visible;
         }
     }
 }

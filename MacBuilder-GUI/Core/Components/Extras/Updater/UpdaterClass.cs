@@ -34,6 +34,7 @@ namespace MacBuilder_GUI.Core.Components.Extras.Updater
 
             if (isUpdateAvailable)
             {
+                /*
                 Logger.Log($"Update available. Current version: {CurrentVersion}, Latest version: {latestVersion}.", Logger.LogLevel.Info);
                 bool update = await DialogClass.ShowYesNoDialogAsync("Update Available", $"MacBuilder {latestVersion} is now available would you like to update now?");
                 if (update)
@@ -41,6 +42,7 @@ namespace MacBuilder_GUI.Core.Components.Extras.Updater
                     await DownloadLatestReleaseAsync(latestVersion);
 
                 }
+                */
             }
             else
             {
